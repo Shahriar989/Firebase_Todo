@@ -53,7 +53,9 @@
             android:hint="Task Detail"
             android:inputType="textMultiLine"
             android:maxLength="255"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textColorHint="#616161"
+            tools:ignore="TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
