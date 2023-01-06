@@ -7,9 +7,7 @@ import com.shahriar.a06_firebase_todo_class_19_to_26.data.model.Note
 import com.shahriar.a06_firebase_todo_class_19_to_26.utils.Constants
 import javax.inject.Inject
 
-class NoteRepositoryImpl @Inject constructor(
-    private val database: FirebaseFirestore
-) : NoteRepository {
+class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFirestore) : NoteRepository {
 
     override fun add(note: Note) {
 

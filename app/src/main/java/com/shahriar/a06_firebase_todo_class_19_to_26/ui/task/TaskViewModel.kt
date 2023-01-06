@@ -7,9 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskViewModel @Inject constructor(
-    var repositoryImpl: NoteRepositoryImpl
-) : ViewModel() {
+class TaskViewModel @Inject constructor(var repositoryImpl: NoteRepositoryImpl) : ViewModel() {
 
     fun addNote(note: Note) = repositoryImpl.add(note)
 
