@@ -1,5 +1,6 @@
 package com.shahriar.a06_firebase_todo_class_19_to_26.data.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shahriar.a06_firebase_todo_class_19_to_26.data.model.Note
@@ -38,6 +39,9 @@ class NoteRepositoryImpl @Inject constructor(
                     notes.add(note)
                 }
                 allNotes.value = notes
+
+                Log.i("TAG", "getAllTask: ${notes.size}")
+
             }.addOnFailureListener {
 
             }

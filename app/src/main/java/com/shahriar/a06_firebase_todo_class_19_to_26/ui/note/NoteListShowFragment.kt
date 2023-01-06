@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.shahriar.a06_firebase_todo_class_19_to_26.R
 import com.shahriar.a06_firebase_todo_class_19_to_26.databinding.FragmentNoteListShowBinding
 import com.shahriar.a06_firebase_todo_class_19_to_26.ui.task.TaskViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoteListShowFragment : Fragment() {
 
     lateinit var binding: FragmentNoteListShowBinding
