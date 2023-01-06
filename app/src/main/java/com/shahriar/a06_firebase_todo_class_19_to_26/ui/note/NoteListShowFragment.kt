@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.shahriar.a06_firebase_todo_class_19_to_26.R
 import com.shahriar.a06_firebase_todo_class_19_to_26.databinding.FragmentNoteListShowBinding
 import com.shahriar.a06_firebase_todo_class_19_to_26.ui.task.TaskViewModel
+import com.shahriar.a06_firebase_todo_class_19_to_26.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,11 +39,20 @@ class NoteListShowFragment : Fragment() {
 
         viewModel.getAllTaskData()
 
-        viewModel.allNotes.observe(viewLifecycleOwner){
+        viewModel.allNotes.observe(viewLifecycleOwner){ state->
 
-            for (note in it){
-
-                Log.i("TAG", "Task: $note")
+            when(state){
+                is UiState.Loading->{
+                    Log.i("TAG","Loading......")
+                }
+                is UiState.Failure -> {
+                    Log.i("TAG","Fail......")
+                }
+                is UiState.Success -> {
+                    for (note in state.data){
+                        Log.i("TAG",note.toString())
+                    }
+                }
             }
         }
 

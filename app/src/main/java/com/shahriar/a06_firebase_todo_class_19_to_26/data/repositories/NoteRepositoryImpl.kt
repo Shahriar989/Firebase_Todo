@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shahriar.a06_firebase_todo_class_19_to_26.data.model.Note
 import com.shahriar.a06_firebase_todo_class_19_to_26.utils.Constants
+import com.shahriar.a06_firebase_todo_class_19_to_26.utils.UiState
 import javax.inject.Inject
 
 class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFirestore) : NoteRepository {
@@ -22,9 +23,7 @@ class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFires
         }
     }
 
-    val allNotes = MutableLiveData<List<Note>>()
-
-    override fun getAllTask() {
+    override fun getAllTask(result:(UiState<List<Note>>)-> Unit) {
 
         val notes = arrayListOf<Note>()
 
@@ -36,12 +35,25 @@ class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFires
                     val note = document.toObject(Note::class.java)
                     notes.add(note)
                 }
-                allNotes.value = notes
+
+                result.invoke(
+                    UiState.Success(notes)
+                )
+
+                //allNotes.value = notes
 
                 Log.i("TAG", "getAllTask: ${notes.size}")
 
             }.addOnFailureListener {
 
+                result.invoke(
+                    UiState.Failure("${it.localizedMessage}")
+                )
+
             }
+    }
+
+    override fun delete(note: Note) {
+        TODO("Not yet implemented")
     }
 }
