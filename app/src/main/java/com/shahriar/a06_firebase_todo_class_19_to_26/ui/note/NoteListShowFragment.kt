@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.shahriar.a06_firebase_todo_class_19_to_26.R
+import com.shahriar.a06_firebase_todo_class_19_to_26.data.model.Note
 import com.shahriar.a06_firebase_todo_class_19_to_26.databinding.FragmentNoteListShowBinding
 import com.shahriar.a06_firebase_todo_class_19_to_26.ui.task.TaskViewModel
 import com.shahriar.a06_firebase_todo_class_19_to_26.utils.UiState
@@ -38,23 +39,41 @@ class NoteListShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getAllTaskData()
+        viewModel.allTask.observe(viewLifecycleOwner){
 
-        viewModel.allNotes.observe(viewLifecycleOwner){ state->
-
-            when(state){
-                is UiState.Loading->{
-                    Log.i("TAG","Loading......")
-                }
+            when(it){
                 is UiState.Failure -> {
-                    Log.i("TAG","Fail......")
+                    Log.i("TAG", "Failure: ${it.message}")
+                }
+                is UiState.Loading -> {
+
+                    Log.i("TAG", "Loading.....")
                 }
                 is UiState.Success -> {
-                    for (note in state.data){
-                        Log.i("TAG",note.toString())
-                    }
+
+                    val data: List<Note> = it.data!!
+
+                    Log.i("TAG", "onViewCreated: $data")
                 }
             }
         }
+
+//        viewModel.allNotes.observe(viewLifecycleOwner){ state->
+//
+//            when(state){
+//                is UiState.Loading->{
+//                    Log.i("TAG","Loading......")
+//                }
+//                is UiState.Failure -> {
+//                    Log.i("TAG","Fail...... ${state.error}")
+//                }
+//                is UiState.Success -> {
+//                    for (note in state.data){
+//                        Log.i("TAG",note.toString())
+//                    }
+//                }
+//            }
+//        }
 
         binding.floatingActionButton.setOnClickListener {
 

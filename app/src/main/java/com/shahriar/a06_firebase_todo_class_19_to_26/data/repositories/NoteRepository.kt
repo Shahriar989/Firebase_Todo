@@ -7,7 +7,7 @@ interface NoteRepository {
 
     fun add(note: Note)
 
-    fun getAllTask(result: (UiState<List<Note>>)-> Unit)
+    fun getAllTask()
 
     fun delete(note: Note)
 }
