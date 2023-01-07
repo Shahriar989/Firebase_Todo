@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.shahriar.a06_firebase_todo_class_19_to_26.R
 import com.shahriar.a06_firebase_todo_class_19_to_26.data.model.Note
 import com.shahriar.a06_firebase_todo_class_19_to_26.databinding.FragmentNoteListShowBinding
+import com.shahriar.a06_firebase_todo_class_19_to_26.ui.adapters.NoteAdapter
 import com.shahriar.a06_firebase_todo_class_19_to_26.ui.task.TaskViewModel
 import com.shahriar.a06_firebase_todo_class_19_to_26.utils.UiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,30 +55,21 @@ class NoteListShowFragment : Fragment() {
                     val data: List<Note> = it.data!!
 
                     Log.i("TAG", "onViewCreated: $data")
+                    
+                    setRecyclerView(data)
                 }
             }
         }
-
-//        viewModel.allNotes.observe(viewLifecycleOwner){ state->
-//
-//            when(state){
-//                is UiState.Loading->{
-//                    Log.i("TAG","Loading......")
-//                }
-//                is UiState.Failure -> {
-//                    Log.i("TAG","Fail...... ${state.error}")
-//                }
-//                is UiState.Success -> {
-//                    for (note in state.data){
-//                        Log.i("TAG",note.toString())
-//                    }
-//                }
-//            }
-//        }
 
         binding.floatingActionButton.setOnClickListener {
 
             findNavController().navigate(R.id.action_noteListShowFragment_to_createTaskFragment)
         }
+    }
+    private fun setRecyclerView(data: List<Note>) {
+
+        val noteAdapter = NoteAdapter(requireActivity(), data)
+        binding.noteListRecyclerView.adapter = noteAdapter
+
     }
 }

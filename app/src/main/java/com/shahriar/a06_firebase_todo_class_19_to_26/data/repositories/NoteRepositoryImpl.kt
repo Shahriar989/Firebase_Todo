@@ -12,7 +12,15 @@ import javax.inject.Inject
 class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFirestore) :
     NoteRepository {
 
+    private var _responseCreateNote = MutableLiveData<UiState<String>>()
+
+    val responseCreateNote : LiveData<UiState<String>>
+
+    get() = _responseCreateNote
+
     override fun add(note: Note) {
+
+        _responseCreateNote.postValue(UiState.Loading())
 
         val document = database.collection(Constants.NOTE).document()
 
@@ -20,14 +28,18 @@ class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFires
 
         document.set(note).addOnSuccessListener {
 
+            _responseCreateNote.postValue(UiState.Success(message = Constants.NOTE_CREATED))
+
         }.addOnFailureListener {
+
+            _responseCreateNote.postValue(UiState.Failure(message = it.localizedMessage!!))
 
         }
     }
 
     private var _allTask = MutableLiveData<UiState<List<Note>>>()
-    val allTask : LiveData<UiState<List<Note>>>
-    get() = _allTask
+    val allTask: LiveData<UiState<List<Note>>>
+        get() = _allTask
 
     override fun getAllTask() {
 
@@ -44,7 +56,7 @@ class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFires
                     notes.add(note)
                 }
 
-                _allTask.postValue(UiState.Success(notes))
+                _allTask.postValue(UiState.Success(notes, null))
 
                 //allNotes.value = notes
 
@@ -54,14 +66,6 @@ class NoteRepositoryImpl @Inject constructor(private val database: FirebaseFires
 
                     UiState.Failure(message = msg)
                 })
-
-
-//                Log.i("TAG", "getAllTask: ${it.localizedMessage}")
-//
-//                result.invoke(
-//                    UiState.Failure("${it.localizedMessage}")
-//                )
-
             }
     }
 

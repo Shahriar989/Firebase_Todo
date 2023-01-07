@@ -13,9 +13,9 @@ class TaskViewModel @Inject constructor(var repositoryImpl: NoteRepositoryImpl) 
 
     fun addNote(note: Note) = repositoryImpl.add(note)
 
-    fun getAllTaskData() = repositoryImpl.getAllTask()
+    val createNoteResponse = repositoryImpl.responseCreateNote
 
-    //val allNotes = MutableLiveData<UiState<List<Note>>>()
+    fun getAllTaskData() = repositoryImpl.getAllTask()
 
     val allTask = repositoryImpl.allTask
 }
