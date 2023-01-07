@@ -70,6 +70,6 @@ class NoteListShowFragment : Fragment() {
 
         val noteAdapter = NoteAdapter(requireActivity(), data)
         binding.noteListRecyclerView.adapter = noteAdapter
-
+        binding.noteListRecyclerView.setHasFixedSize(true)
     }
 }
